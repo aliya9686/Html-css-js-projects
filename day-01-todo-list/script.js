@@ -6,6 +6,7 @@ addBtn.addEventListener("click", function () {
   let text = input.value.trim();
 
   if (text === "") {
+    alert("Please enter a task!!");
     return;
   }
 
