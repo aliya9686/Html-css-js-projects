@@ -10,8 +10,6 @@ addBtn.addEventListener("click", function () {
     return;
   }
 
-
-
   if (editPara != null) {
     editPara.innerText = text;
     editPara = null;
@@ -27,15 +25,18 @@ addBtn.addEventListener("click", function () {
   let para = document.createElement("p");
   para.innerText = text;
 
-  const allTasks=document.querySelectorAll(".todo p");
-  for(let todo of allTasks){
-
-  
-    if(todo.innerText.toLocaleLowerCase()===text.toLowerCase()){
+  const allTasks = document.querySelectorAll(".todo p");
+  for (let todo of allTasks) {
+    if (todo.innerText.toLocaleLowerCase() === text.toLowerCase()) {
       alert("This task already exists!");
       return;
     }
   }
+
+  let checkbox=document.createElement("input");
+  checkbox.type="checkbox";
+
+ 
 
 
   let delBtn = document.createElement("button");
@@ -58,6 +59,7 @@ addBtn.addEventListener("click", function () {
   todo.appendChild(para);
   todo.appendChild(delBtn);
   todo.appendChild(editBtn);
+  todo.appendChild(checkbox);
 
   todoWrapper.appendChild(todo);
 
