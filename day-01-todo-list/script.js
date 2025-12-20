@@ -10,6 +10,8 @@ addBtn.addEventListener("click", function () {
     return;
   }
 
+
+
   if (editPara != null) {
     editPara.innerText = text;
     editPara = null;
@@ -17,12 +19,24 @@ addBtn.addEventListener("click", function () {
     input.value = "";
     return;
   }
+
   let todo = document.createElement("div");
   todo.className =
     "todo bg-white flex justify-between items-center text-2xl p-4 rounded shadow-md";
 
   let para = document.createElement("p");
   para.innerText = text;
+
+  const allTasks=document.querySelectorAll(".todo p");
+  for(let todo of allTasks){
+
+  
+    if(todo.innerText.toLocaleLowerCase()===text.toLowerCase()){
+      alert("This task already exists!");
+      return;
+    }
+  }
+
 
   let delBtn = document.createElement("button");
   delBtn.innerText = "Delete";
