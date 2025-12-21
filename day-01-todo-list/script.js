@@ -36,6 +36,17 @@ addBtn.addEventListener("click", function () {
   let checkbox=document.createElement("input");
   checkbox.type="checkbox";
 
+  checkbox.addEventListener("change",function(){
+    if(checkbox.checked){
+      para.classList.add("line-through","text-gray-400");
+
+    }else{
+       para.classList.remove("line-through","text-gray-400");
+
+    }
+  })
+
+
  
 
 
