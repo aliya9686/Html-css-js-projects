@@ -33,6 +33,15 @@ addBtn.addEventListener("click", function () {
     }
   }
 
+  function getTodos(){
+    return JSON.parse(localStorage.getitem("todos"))||[];
+
+  }
+  function saveTodos(){
+    localStorage.setItem("todos",JSON.stringify(todos));
+
+  }
+
   let checkbox=document.createElement("input");
   checkbox.type="checkbox";
 
