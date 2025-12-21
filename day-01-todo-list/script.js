@@ -2,6 +2,15 @@ const input = document.getElementById("input-todo");
 const addBtn = document.getElementById("add-todo");
 const todoWrapper = document.querySelector(".todo-wrapper");
 let editPara = null;
+
+
+function getTodos() {
+  return JSON.parse(localStorage.getItem("todos")) || [];
+}
+function saveTodos(todos) {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
 addBtn.addEventListener("click", function () {
   let text = input.value.trim();
 
@@ -11,14 +20,18 @@ addBtn.addEventListener("click", function () {
   }
 
   if (editPara != null) {
+    let todos=getTodos();
+    todos=todos.map(t=>t.text===editPara.innerText?{...t,text}:t);
+    saveTodos(todos);
     editPara.innerText = text;
     editPara = null;
     addBtn.innerText = "Add";
     input.value = "";
     return;
   }
-
-  let todo = document.createElement("div");
+});
+function createTodo(text, completed = false) {
+  let todo = document.createElement("div")
   todo.className =
     "todo bg-white flex justify-between items-center text-2xl p-4 rounded shadow-md";
 
@@ -32,13 +45,10 @@ addBtn.addEventListener("click", function () {
       return;
     }
   }
-
-  function getTodos() {
-    return JSON.parse(localStorage.getItem("todos")) || [];
-  }
-  function saveTodos() {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }
+}
+  let todos = getTodos();
+  todos.push({ text: text, completed: false });
+  saveTodos(todos);
 
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -48,6 +58,7 @@ addBtn.addEventListener("click", function () {
     todos = todos.map((t) =>
       t.text === para.innerText ? { ...t, completed: checkbox.checked } : t
     );
+
     saveTodos(todos);
     if (checkbox.checked) {
       para.classList.add("line-through", "text-gray-400");
@@ -60,9 +71,13 @@ addBtn.addEventListener("click", function () {
   delBtn.innerText = "Delete";
   delBtn.className = "bg-red-500 text-white px-3 py-1 rounded";
 
-  delBtn.addEventListener("click", function () {
-    todo.remove();
-  });
+ delBtn.addEventListener("click", function () {
+  let todos = getTodos();
+  todos = todos.filter(t => t.text !== para.innerText);
+  saveTodos(todos);
+  todo.remove();
+});
+
 
   let editBtn = document.createElement("button");
   editBtn.innerText = "Edit";
@@ -80,5 +95,10 @@ addBtn.addEventListener("click", function () {
 
   todoWrapper.appendChild(todo);
 
-  input.value = "";
-});
+  window.addEventListener("DOMContentLoaded", function () {
+    let todos = getTodos();
+    todos.forEach((todo) => {
+      createTodo(todo.text, todo.completed);
+    });
+  });
+
