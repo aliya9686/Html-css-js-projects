@@ -33,31 +33,28 @@ addBtn.addEventListener("click", function () {
     }
   }
 
-  function getTodos(){
-    return JSON.parse(localStorage.getitem("todos"))||[];
-
+  function getTodos() {
+    return JSON.parse(localStorage.getItem("todos")) || [];
   }
-  function saveTodos(){
-    localStorage.setItem("todos",JSON.stringify(todos));
-
+  function saveTodos() {
+    localStorage.setItem("todos", JSON.stringify(todos));
   }
 
-  let checkbox=document.createElement("input");
-  checkbox.type="checkbox";
+  let checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
 
-  checkbox.addEventListener("change",function(){
-    if(checkbox.checked){
-      para.classList.add("line-through","text-gray-400");
-
-    }else{
-       para.classList.remove("line-through","text-gray-400");
-
+  checkbox.addEventListener("change", function () {
+    let todos = getTodos();
+    todos = todos.map((t) =>
+      t.text === para.innerText ? { ...t, completed: checkbox.checked } : t
+    );
+    saveTodos(todos);
+    if (checkbox.checked) {
+      para.classList.add("line-through", "text-gray-400");
+    } else {
+      para.classList.remove("line-through", "text-gray-400");
     }
-  })
-
-
- 
-
+  });
 
   let delBtn = document.createElement("button");
   delBtn.innerText = "Delete";
